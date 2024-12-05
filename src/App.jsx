@@ -1,9 +1,10 @@
 import CustomerList from './components/CustomerList';
+import TrainingList from './components/TrainingList';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
-import { AppBar } from '@mui/material';
-import { Toolbar } from '@mui/material';
-import Typography from '@mui/material';
+import  AppBar  from '@mui/material/AppBar';
+import Toolbar  from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
             <Typography variant="h6">Customerlist</Typography>
           </Toolbar>
         </AppBar>
-        <CustomerList />
+        <TrainingList />
         <CssBaseline />
       </Container>
     </>

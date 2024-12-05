@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -5,7 +6,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { updateCustomer } from '../apifunctions/customerapi';
+import { updateCustomer } from '../api/customerapi';
 
 export default function EditCustomer(props) {
     const [open, setOpen] = useState(false);
@@ -32,13 +33,20 @@ export default function EditCustomer(props) {
         });
     };
 
+    const handleChange = (e) => {
+        setCustomer({ ...customer, [e.target.name]: e.target.value });
+    };
+
     const handleClose = () => {
         setOpen(false);
     };
 
     const handleUpdate = () => {
         updateCustomer(props.data._links.customer.href, customer)
-            .then(() => props.handleFetch())
+            .then(() => {
+                props.handleFetch();
+                handleClose();
+            })
             .catch(err => console.log(err));
     }
 
@@ -52,7 +60,7 @@ export default function EditCustomer(props) {
                         margin="dense"
                         name="firstname"
                         value={customer.firstname}
-                        onChange={e => setCustomer({ ...customer, firstname: e.target.value })}
+                        onChange={handleChange}
                         label="First Name"
                         fullWidth
                         variant="standard"
@@ -61,7 +69,7 @@ export default function EditCustomer(props) {
                         margin="dense"
                         name="lastname"
                         value={customer.lastname}
-                        onChange={e => setCustomer({ ...customer, lastname: e.target.value })}
+                        onChange={handleChange}
                         label="Last Name"
                         fullWidth
                         variant="standard"
@@ -70,7 +78,7 @@ export default function EditCustomer(props) {
                         margin="dense"
                         name="email"
                         value={customer.email}
-                        onChange={e => setCustomer({ ...customer, email: e.target.value })}
+                        onChange={handleChange}
                         label="Email"
                         fullWidth
                         variant="standard"
@@ -79,7 +87,7 @@ export default function EditCustomer(props) {
                         margin="dense"
                         name="phone"
                         value={customer.phone}
-                        onChange={e => setCustomer({ ...customer, phone: e.target.value })}
+                        onChange={handleChange}
                         label="Phone"
                         fullWidth
                         variant="standard"
@@ -88,7 +96,7 @@ export default function EditCustomer(props) {
                         margin="dense"
                         name="streetaddress"
                         value={customer.streetaddress}
-                        onChange={e => setCustomer({ ...customer, streetaddress: e.target.value })}
+                        onChange={handleChange}
                         label="Street Address"
                         fullWidth
                         variant="standard"
@@ -97,7 +105,7 @@ export default function EditCustomer(props) {
                         margin="dense"
                         name="postcode"
                         value={customer.postcode}
-                        onChange={e => setCustomer({ ...customer, postcode: e.target.value })}
+                        onChange={handleChange}
                         label="Postcode"
                         fullWidth
                         variant="standard"
@@ -106,7 +114,7 @@ export default function EditCustomer(props) {
                         margin="dense"
                         name="city"
                         value={customer.city}
-                        onChange={e => setCustomer({ ...customer, city: e.target.value })}
+                        onChange={handleChange}
                         label="City"
                         fullWidth
                         variant="standard"

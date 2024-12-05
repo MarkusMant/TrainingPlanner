@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import { AgGridReact } from 'ag-grid-react';
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
-import { getCustomers, deleteCustomer } from "../apifunctions/customerapi";
+import { getCustomers, deleteCustomer } from "../api/customerapi";
 import EditCustomer from "./EditCustomer";
+import AddCustomer from "./AddCustomer";
 
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import AddCustomer from "./AddCustomer";
+
 
 
 function CustomerList() {
@@ -23,13 +24,14 @@ function CustomerList() {
         { field: "streetaddress", headerName: "Street Address", sortable: true, filter: true, flex: 1 },
         { field: "postcode", headerName: "Postcode", sortable: true, filter: true, flex: 1 },
         { field: "city", headerName: "City", sortable: true, filter: true, flex: 1 },
+
         {
+            cellRenderer: params => <EditCustomer data={params.data} handleFetch={handleFetch} />
+        }, 
+       {
             cellRenderer: params => <Button size="small" color="error"
                 onClick={() => handleDelete(params.data)}
-            >Delete</Button>, width: 150
-        },
-        {
-            cellRenderer: params => <EditCustomer data={params.data} handleFetch={getCustomers} />
+            >Delete</Button>, flex: 1
         }
     ]);
 
