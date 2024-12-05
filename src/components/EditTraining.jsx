@@ -90,7 +90,7 @@ export default function EditTraining(props) {
                         fullWidth
                         variant="standard"
                     />
-                    <FormControl fullWidth margin="dense">
+                   <FormControl fullWidth margin="dense">
                         <InputLabel>Customer</InputLabel>
                         <Select
                             name="customer"

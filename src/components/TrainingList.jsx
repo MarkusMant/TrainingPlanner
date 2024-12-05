@@ -2,14 +2,13 @@ import { useState, useEffect } from "react";
 import { AgGridReact } from 'ag-grid-react';
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
-import { getTrainings, deleteTraining, getTrainingsWithCustomer } from "../api/trainingapi";
-import EditTraining from "./EditTraining";
-import AddTraining from "./AddTraining";
-
-
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import { getCustomers } from "../api/customerapi";
+import dayjs from "dayjs";
+
+import { deleteTraining, getTrainings, getTrainingsWithCustomer } from "../api/trainingapi";
+import EditTraining from "./EditTraining";
+import AddTraining from "./AddTraining";
 
 
 function TrainingList() {
@@ -22,7 +21,10 @@ function TrainingList() {
         {field: "duration", headerName: "Duration", sortable: true, filter: true, flex: 1},
         {field: "activity", headerName: "Activity", sortable: true, filter: true, flex: 1},
         {field: "customer", headerName: "Customer", sortable: true, filter: true, flex: 1,
-            valueGetter: params => params.data.customer.firstname + " " + params.data.customer.lastname
+            valueGetter: params => {
+                const customer = params.data.customer;
+                return customer ? `${customer.firstname} ${customer.lastname}` : 'Unknown';
+            }
         },
         {
             cellRenderer: params => <EditTraining data={params.data} handleFetch={handleFetch} />
@@ -56,7 +58,7 @@ function TrainingList() {
             .then(data => setTrainings(data))
             .catch(err => console.log(err));
     }
-
+    console.log(trainings);
     return(
         <>
             <AddTraining handleFetch={handleFetch} />

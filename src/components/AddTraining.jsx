@@ -12,11 +12,15 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from 'dayjs';
 
 export default function AddTraining(props) {
     const [open, setOpen] = useState(false);
     const [training, setTraining] = useState({
-        date: "",
+        date: dayjs(),
         duration: "",
         activity: "",
         customer: ""
@@ -39,55 +43,59 @@ export default function AddTraining(props) {
 
     const handleChange = (e) => {
         setTraining({ ...training, [e.target.name]: e.target.value });
-    } 
+    };
+
+    const handleDateChange = (date) => {
+        setTraining({ ...training, date });
+    };
 
     const handleSave = () => {
-        saveTraining(training)
+        saveTraining({
+            ...training,
+            date: training.date.toISOString()
+        })
             .then(() => {
                 props.handleFetch();
                 handleClose();
                 setTraining({
-                    date: "",
+                    date: dayjs(),
                     duration: "",
                     activity: "",
                     customer: ""
-                })
+                });
             })
             .catch(err => console.log(err));
-    }
+    };
 
     return (
         <>
             <Button variant="outlined" onClick={handleClickOpen}>Add Training</Button>
-            <Dialog
-                open={open}
-                onClose={handleClose}>
+            <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Add Training</DialogTitle>
                 <DialogContent>
-                    <TextField
-                        margin="dense"
-                        name="date"
-                        value={training.date}
-                        onChange={handleChange}
-                        label="Date"
-                        fullWidth
-                        variant="standard"
-                    />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DateTimePicker
+                            label="Date & Time"
+                            value={training.date}
+                            onChange={handleDateChange}
+                            renderInput={(params) => <TextField {...params} fullWidth margin="dense" />}
+                        />
+                    </LocalizationProvider>
                     <TextField
                         margin="dense"
                         name="duration"
+                        label="Duration"
                         value={training.duration}
                         onChange={handleChange}
-                        label="Duration"
                         fullWidth
                         variant="standard"
                     />
                     <TextField
                         margin="dense"
                         name="activity"
+                        label="Activity"
                         value={training.activity}
                         onChange={handleChange}
-                        label="Activity"
                         fullWidth
                         variant="standard"
                     />
@@ -97,21 +105,20 @@ export default function AddTraining(props) {
                             name="customer"
                             value={training.customer}
                             onChange={handleChange}
-                            label="Customer"
                         >
-                            {customers.map(customer => {
-                                <MenuItem key={customer._links.self.href} value={customer._links.self.href}>
+                            {customers.map((customer, index) => (
+                                <MenuItem key={index} value={customer._links.self.href}>
                                     {customer.firstname} {customer.lastname}
                                 </MenuItem>
-                            })}
+                            ))}
                         </Select>
                     </FormControl>
-                    <DialogActions>
-                        <Button onClick={handleClose} color="primary">Cancel</Button>
-                        <Button onClick={handleSave} color="primary">Save</Button>
-                    </DialogActions>
                 </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">Cancel</Button>
+                    <Button onClick={handleSave} color="primary">Save</Button>
+                </DialogActions>
             </Dialog>
         </>
-    )
+    );
 }

@@ -24,7 +24,6 @@ function CustomerList() {
         { field: "streetaddress", headerName: "Street Address", sortable: true, filter: true, flex: 1 },
         { field: "postcode", headerName: "Postcode", sortable: true, filter: true, flex: 1 },
         { field: "city", headerName: "City", sortable: true, filter: true, flex: 1 },
-
         {
             cellRenderer: params => <EditCustomer data={params.data} handleFetch={handleFetch} />
         }, 
@@ -57,7 +56,7 @@ function CustomerList() {
             .then(data => setCustomers(data._embedded.customers))
             .catch(err => console.log(err));
     }
-
+    console.log(customers);
     return (
         <>
             <AddCustomer handleFetch={handleFetch} />
