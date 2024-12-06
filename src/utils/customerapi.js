@@ -32,20 +32,6 @@ export function saveCustomer(newCustomer) {
         })
 }
 
-export function saveTraining(newTraining) {
-    return fetch(import.meta.env.VITE_API_URL_TRAININGS, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newTraining)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Error in saving entry: " + response.statusText);
-            }
-            return response.json();
-        })
-}
-
 export function updateCustomer(url, customer) {
     return fetch(url, {
         method: 'PUT',

@@ -43,17 +43,3 @@ export function deleteTraining(url) {
             return response.json();
         })
 }
-
-export function updateTraining(url, training) {
-    return fetch(url, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(training)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Error in updating entry: " + response.statusText);
-            }
-            return response.json();
-        })
-} 

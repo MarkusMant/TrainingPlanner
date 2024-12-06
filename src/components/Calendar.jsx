@@ -12,14 +12,12 @@ function Calendar() {
     useEffect(() => {
         getTrainingsWithCustomer()
             .then(data => {
-                console.log(data);
                 const trainings = data.map(training => ({
                     id: training.id,
                     title: `${training.activity} with ${training.customer.firstname} ${training.customer.lastname}`,
                     start: new Date(training.date),
                     end: new Date(moment(training.date).add(training.duration, 'minutes').toISOString())
                 }));
-                console.log("formatted events: ", trainings)
                 setEvents(trainings);
             })
             .catch(err => console.log(err));
