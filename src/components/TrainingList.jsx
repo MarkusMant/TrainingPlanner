@@ -4,10 +4,8 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import dayjs, { Dayjs } from "dayjs";
-
-import { deleteTraining, getTrainings, getTrainingsWithCustomer } from "../api/trainingapi";
-import EditTraining from "./EditTraining";
+import dayjs from "dayjs";
+import { deleteTraining, getTrainingsWithCustomer } from "../utils/trainingapi";
 import AddTraining from "./AddTraining";
 
 
@@ -40,9 +38,6 @@ function TrainingList() {
                 const customer = params.data.customer;
                 return customer ? `${customer.firstname} ${customer.lastname}` : 'Unknown';
             }
-        },
-        {
-            cellRenderer: params => <EditTraining data={params.data} handleFetch={handleFetch} />
         },
         {
             cellRenderer: params => <Button size="small" color="error"
@@ -78,7 +73,6 @@ function TrainingList() {
     console.log(trainings);
     return(
         <>
-            <AddTraining handleFetch={handleFetch} />
             <div className="ag-theme-material" style={{height: 400, width: '90%', margin: 'auto'}}>
                 <AgGridReact
                     rowData={trainings}
@@ -87,6 +81,7 @@ function TrainingList() {
                     paginationAutoPageSize={true}
                     suppressCellFocus={true}
                 />
+                <AddTraining handleFetch={handleFetch} />
                 <Snackbar
                     open={open}
                     autoHideDuration={3000}

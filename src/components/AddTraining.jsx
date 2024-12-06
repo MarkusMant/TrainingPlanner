@@ -6,8 +6,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { saveTraining } from '../api/trainingapi';
-import { getCustomers } from '../api/customerapi';
+import { saveTraining } from '../utils/trainingapi';
+import { getCustomers } from '../utils/customerapi';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
@@ -66,7 +66,7 @@ export default function AddTraining(props) {
 
     return (
         <>
-            <Button variant="outlined" onClick={handleClickOpen}>Add Training</Button>
+            <Button variant='contained' color='success' onClick={handleClickOpen}>Add Training</Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Add Training</DialogTitle>
                 <DialogContent>

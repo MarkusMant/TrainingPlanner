@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import { AgGridReact } from 'ag-grid-react';
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
-import { getCustomers, deleteCustomer } from "../api/customerapi";
+import { getCustomers, deleteCustomer } from "../utils/customerapi";
 import EditCustomer from "./EditCustomer";
 import AddCustomer from "./AddCustomer";
 
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
+import { exportToCsv } from "../utils/exportToCsv";
 
 
 
@@ -56,9 +57,13 @@ function CustomerList() {
             .then(data => setCustomers(data._embedded.customers))
             .catch(err => console.log(err));
     }
+
+    const handleExport = () => {
+        exportToCsv("customers.csv", customers);
+    }
     return (
         <>
-            <AddCustomer handleFetch={handleFetch} />
+            
             <div className="ag-theme-material" style={{ height: 400, width: "90%", margin: "auto" }}>
                 <AgGridReact
                     rowData={customers}
@@ -67,6 +72,7 @@ function CustomerList() {
                     paginationPageSize={true}
                     suppressCellFocus={true}
                 />
+               <AddCustomer handleFetch={handleFetch} /> <Button variant="contained" color="primary" onClick={handleExport}>Download CSV</Button>
                 <Snackbar
                     open={open}
                     message="Customer deleted"

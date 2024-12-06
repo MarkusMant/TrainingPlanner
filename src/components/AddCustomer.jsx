@@ -6,7 +6,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { saveCustomer } from '../api/customerapi';
+import { saveCustomer } from '../utils/customerapi';
 
 export default function AddCustomer(props) {
     const [open, setOpen] = useState(false);
@@ -52,7 +52,7 @@ export default function AddCustomer(props) {
 
     return (
         <>
-            <Button variant="outlined" onClick={handleClickOpen}>Add Customer</Button>
+            <Button variant='contained' color='success' onClick={handleClickOpen}>Add Customer</Button>
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Add Customer</DialogTitle>
                 <DialogContent>
