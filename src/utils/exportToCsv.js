@@ -4,7 +4,7 @@ export function exportToCsv(filename, rows) {
     };
 
     const csvContent = [
-        Object.keys(rows[0]).join(','), // header row
+        Object.keys(rows[0]).join(','),
         ...rows.map(row => processRow(Object.values(row)))
     ].join('\n');
 

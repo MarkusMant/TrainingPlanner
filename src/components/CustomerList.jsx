@@ -27,8 +27,8 @@ function CustomerList() {
         { field: "city", headerName: "City", sortable: true, filter: true, flex: 1 },
         {
             cellRenderer: params => <EditCustomer data={params.data} handleFetch={handleFetch} />
-        }, 
-       {
+        },
+        {
             cellRenderer: params => <Button size="small" color="error"
                 onClick={() => handleDelete(params.data)}
             >Delete</Button>, flex: 1
@@ -44,7 +44,7 @@ function CustomerList() {
     }
 
     const handleDelete = (params) => {
-        if(window.confirm("Are you sure you want to delete?")) {
+        if (window.confirm("Are you sure you want to delete?")) {
             setOpen(true);
             deleteCustomer(params._links.customer.href)
                 .then(() => handleFetch())
@@ -63,7 +63,7 @@ function CustomerList() {
     }
     return (
         <>
-            
+
             <div className="ag-theme-material" style={{ height: 400, width: "90%", margin: "auto" }}>
                 <AgGridReact
                     rowData={customers}
@@ -72,7 +72,7 @@ function CustomerList() {
                     paginationPageSize={true}
                     suppressCellFocus={true}
                 />
-               <AddCustomer handleFetch={handleFetch} /> <Button variant="contained" color="primary" onClick={handleExport}>Download CSV</Button>
+                <AddCustomer handleFetch={handleFetch} /> <Button variant="contained" color="primary" onClick={handleExport}>Download CSV</Button>
                 <Snackbar
                     open={open}
                     message="Customer deleted"
