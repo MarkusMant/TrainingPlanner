@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 import { deleteTraining, getTrainings, getTrainingsWithCustomer } from "../api/trainingapi";
 import EditTraining from "./EditTraining";
@@ -17,7 +17,22 @@ function TrainingList() {
     const [open, setOpen] = useState(false);
 
     const [colDefs, setColDefs] = useState([
-        {field: "date", headerName: "Date", sortable: true, filter: true, flex: 1},
+        {
+            field: "date", 
+            headerName: "Date", 
+            sortable: true,
+            filter: true,
+            flex: 1,
+            valueGetter: params => dayjs(params.data.date).format('DD/MM/YYYY')
+        },
+        {
+            field: "time",
+            headerName: "Time",
+            sortable: true,
+            filter: true,
+            flex: 1,
+            valueGetter: params => dayjs(params.data.date).format('HH:mm')
+        },
         {field: "duration", headerName: "Duration", sortable: true, filter: true, flex: 1},
         {field: "activity", headerName: "Activity", sortable: true, filter: true, flex: 1},
         {field: "customer", headerName: "Customer", sortable: true, filter: true, flex: 1,
@@ -45,9 +60,11 @@ function TrainingList() {
     }
 
     const handleDelete = (params) => {
+        console.log("delete params: ", params);
         if(window.confirm("Are you sure you want to delete?")) {
             setOpen(true);
-            deleteTraining(params.id)
+            const trainingId = params.id;
+            deleteTraining(`${import.meta.env.VITE_API_URL_TRAININGS}/${trainingId}`)
                 .then(() => handleFetch())
                 .catch(err => console.log(err));
         }

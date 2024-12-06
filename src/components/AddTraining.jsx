@@ -50,10 +50,7 @@ export default function AddTraining(props) {
     };
 
     const handleSave = () => {
-        saveTraining({
-            ...training,
-            date: training.date.toISOString()
-        })
+        saveTraining(training)
             .then(() => {
                 props.handleFetch();
                 handleClose();

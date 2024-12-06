@@ -56,7 +56,6 @@ function CustomerList() {
             .then(data => setCustomers(data._embedded.customers))
             .catch(err => console.log(err));
     }
-    console.log(customers);
     return (
         <>
             <AddCustomer handleFetch={handleFetch} />

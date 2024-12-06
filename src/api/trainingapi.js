@@ -18,8 +18,6 @@ export function getTrainingsWithCustomer() {
 }
 
 export function saveTraining(newTraining) {
-    console.log(newTraining);
-    console.log(JSON.stringify(newTraining));
     return fetch(import.meta.env.VITE_API_URL_TRAININGS, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -36,6 +34,7 @@ export function saveTraining(newTraining) {
 }
 
 export function deleteTraining(url) {
+    console.log(url);
     return fetch(url, { method: 'DELETE' })
         .then(response => {
             if (!response.ok) {

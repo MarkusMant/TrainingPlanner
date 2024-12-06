@@ -12,12 +12,17 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from 'dayjs';
+
 
 export default function EditTraining(props) {
 
     const [open, setOpen] = useState(false);
     const [training, setTraining] = useState({
-        date: "",
+        date: dayjs(),
         duration: "",
         activity: "",
         customer: ""
@@ -48,6 +53,10 @@ export default function EditTraining(props) {
         setTraining({ ...training, [e.target.name]: e.target.value });
     } 
 
+    const handleDateChange = (date) => {
+        setTraining({ ...training, date });
+    };
+
     const handleUpdate = () => {
         updateTraining(props.data._links.self.href, training)
             .then(() => {
@@ -63,15 +72,14 @@ export default function EditTraining(props) {
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Edit Training</DialogTitle>
                 <DialogContent>
-                    <TextField
-                        margin="dense"
-                        name="date"
-                        value={training.date}
-                        onChange={handleChange}
-                        label="Date"
-                        fullWidth
-                        variant="standard"
-                    />
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DateTimePicker
+                            label="Date & Time"
+                            value={training.date}
+                            onChange={handleDateChange}
+                            renderInput={(params) => <TextField {...params} fullWidth margin="dense" />}
+                        />
+                    </LocalizationProvider>
                     <TextField
                         margin="dense"
                         name="duration"
