@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { HashRouter, Route, Routes, Link } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -18,7 +18,7 @@ function App() {
   }
 
   return (
-    <Router>
+    <HashRouter>
       <Container maxWidth="xl">
         <Box sx={{ bgcolor: 'gray', color: 'primary.contrastText', p: 2 }}>
           <Typography variant="h6" align='center' paddingTop={1}>Training Planner</Typography>
@@ -37,7 +37,7 @@ function App() {
         </Routes>
         <CssBaseline />
       </Container>
-    </Router>
+    </HashRouter>
   );
 }
 
